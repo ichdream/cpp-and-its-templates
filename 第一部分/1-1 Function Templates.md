@@ -8,11 +8,23 @@
 
 带着上述问题，我搜索了下网络，基本上很难找到一个准确的定义和概括。
 
-
-
-
+---
 
 ### 1.1 A First Look at Function Template
+
+> Function templates provide a functional behavior that can be called for different types.
+>
+> 🤔什么是functional behavior ? 大致意思，函数模版为不同的数据类型`types`提供实现同一个功能。也就是说，函数模版代表的是一个函数家族/函数簇，这个函数家族完成✅同一套逻辑/算法/功能。
+
+作者继续给函数模版下了个不太严谨的定义，也叫解释：
+
+> The representation looks a lot like an ordinary function, **except that some elements of the function are left undermined:** These elements are parameterized.
+>
+> 从函数模版的表示来看，它很像一个普通函数， **有一点不同：函数模版中一些元素未定义**，为什么未定义呢？因为，它们是要作为模版的参数，从而参数化模版。  
+
+
+
+
 
 
 
