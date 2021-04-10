@@ -97,15 +97,15 @@ constexpr auto max(T1 a, T2 b)
 
 - 模版传参，参数推导
 
-> When you pass arguments to function parameters depending on template parameters, function templates deduce the template parameters to be instantiated for the corresponding parameter types.
->
-> 当你向跟模版参数(template parameters)有依赖关系的函数参数(function parameters)传递值时，函数模版推导模版参数(template parameters)，是为了初始化相应参数的类型。
+  > When you pass arguments to function parameters depending on template parameters, function templates deduce the template parameters to be instantiated for the corresponding parameter types.
 
-⚠️：
+  > 当你向跟模版参数(template parameters)有依赖关系的函数参数(function parameters)传递值时，函数模版推导模版参数(template parameters)，是为了初始化相应参数的类型。
 
-​	函数模版有两类参数：function parameters和template parameters。我觉得还是不翻译地好，保留原文更加容易区分。
+  ⚠️：
 
-​	函数参数接受传入的值，而模版参数决定传入值的类型。
+  ​	函数模版有两类参数：function parameters和template parameters。我觉得还是不翻译地好，保留原文更加容易区分。
+
+  ​	函数参数接受传入的值，而模版参数决定传入值的类型。
 
 - Leading template parameters
 
@@ -134,7 +134,7 @@ constexpr auto max(T1 a, T2 b)
 
 - 默认模版参数default template parameters
 
-> You can define default arguments for template parameters. These may refer to previous template parameters and to be followed by parameters not having default arguments.
+  > You can define default arguments for template parameters. These may refer to previous template parameters and to be followed by parameters not having default arguments.
 
 - 函数模版重载🔃overload function template
 
@@ -150,4 +150,4 @@ constexpr auto max(T1 a, T2 b)
 
 - 函数模版重载🔃：确保编译器看到所有可被重载版本的函数模版。
 
-> Ensure the complier sees all overloaded versions of function templates before you call them.
+  > Ensure the complier sees all overloaded versions of function templates before you call them.
