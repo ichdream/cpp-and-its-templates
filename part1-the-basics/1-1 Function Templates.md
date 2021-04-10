@@ -52,6 +52,10 @@
 
 ### 1.5 Overloading Function Template
 
+涉及到多个函数模版时，这几个函数模版具有同样的名称。
+
+重载🔃规则比较复杂，这一小节只是举了一些例子，详细的🔎重载解析规则见Appendix C。
+
 
 
 ### 1.6 But, Shouldn't We...?
