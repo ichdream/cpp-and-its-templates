@@ -8,10 +8,6 @@
 
 **这篇文章是在网上无意间看到的，我觉得总结得很好，放在这儿，看看自己的理解和文中所述有多少差别。**
 
----
-
-C++的一些高级特性对于新人来说，很具有挑战性，而模板就是其中之一，晦涩语法让很多新人望而生畏；大多数人苦苦磨炼，却始终没有掌握这门绝学，本文通过揭开模板的一些面纱，希望帮助新人掌握模板的心法，从而学会这门武功（技术），助你跨过C++这座大山，向C++顶级程序员迈进，升职加薪；
-
 
 
 ## **C++模版的诞生** 
@@ -22,13 +18,23 @@ C++的一些高级特性对于新人来说，很具有挑战性，而模板就�
 
 程序本质是数据结构+算法，任何一门语言都可以这样理解，这个公式对计算机科学的影响程度足以类似物理学中爱因斯坦的“E=MC^2”——一个公式展示出了程序的本质。
 
-最初C++是没有标准库的，任何一门语言的发展都需要标准库的支持，为了让C++更强大，更方便使用，Bjarne Stroustrup觉得需要给C++提供一个标准库，但标准库设计需要一套统一机制来定义各种通用的容器（数据结构）和算法，并且能很好在一起配合，这就需要它们既要相对的独立，又要操作接口保持统一，而且能够很容易被别人使用(用到实际类中），同时又要保证开销尽量小（性能要好）。Bjarne Stroustrup 提议C++需要一种机制来解决这个问题，所以就催生了模板的产生，最后经标准委员会各路专家讨论和发展，就发展成如今的模版， C++ 第一个正式的标准也加入了模板。
+最初C++是没有标准库的，任何一门语言的发展都需要标准库的支持，为了让C++更强大，更方便使用，Bjarne Stroustrup觉得需要给C++提供一个标准库，但标准库设计需要一套统一机制来定义各种通用的容器（数据结构）和算法，并且能很好在一起配合，这就需要它们既要相对的独立，又要操作接口保持统一，而且能够很容易被别人使用(用到实际类中），同时又要保证开销尽量小（性能要好）。**Bjarne Stroustrup 提议C++需要一种机制来解决这个问题，所以就催生了模板的产生**，最后经标准委员会各路专家讨论和发展，就发展成如今的模版， C++ 第一个正式的标准也加入了模板。
 
-C++模版是一种解决方案，初心是提供参数化容器类和通用的算法（函数），目的就是为了减少重复代码，让通用性和高性能并存，提高C++程序员生产力。
+> <font color="red">**评：**</font>
+>
+> > <font color="red">最初，模版的出现可不是这样的？</font>
+>
+> > <font color="red">因为一个bug导致，这里放着，以后有机会详细🔎叙述。</font>
+
+**C++模版是一种解决方案**，初心是提供参数化容器类和通用的算法（函数），目的就是为了减少重复代码，让通用性和高性能并存，提高C++程序员生产力。
+
+> <font color="red">评：</font>
+>
+> > <font color="red">这么定义🆙模版不合适，一种解决方案？没有触及到本质，想要了解一个概念，最好先了解为什么要创立它，以及创立它的历史，还有它当初所处的环境，更正规的见Wikipedia</font>
 
 ### **什么是参数化容器类？**
 
-首先C++是可以提供OOP（面向对象）范式编程的语言，所以支持类概念，类本身就是现实中一类事物的抽象，包括状态和对应的操作，打个比喻，大多数情况下我们谈论汽车，并不是指具体某辆汽车，而是某一类汽车（某个品牌），或者某一类车型的汽车。
+首先，C++是可以提供OOP（面向对象）范式编程的语言，所以支持类概念，类本身就是现实中一类事物的抽象，包括状态和对应的操作，打个比喻，大多数情况下我们谈论汽车，并不是指具体某辆汽车，而是某一类汽车（某个品牌），或者某一类车型的汽车。
 
 所以我们设计汽车这个类的时候，各个汽车品牌的汽车大体框架（骨架）都差不多，都是4个轮子一个方向盘，而且操作基本上都是相同的，否则学车都要根据不同厂商汽车进行学习，所以我们可以用一个类来描述汽车的行为：
 
@@ -55,6 +61,8 @@ private:
 
 这个时候，就希望这个类是可以参数化的（属性参数化），可以根据不同类型的参数进行属性配置，继而生成不同的类。类模板就应运而生了，类模板就是用来实现参数化的容器类。
 
+
+
 ### **什么是通用算法？**
 
 程序=数据结构+算法
@@ -74,11 +82,19 @@ void sort (void* first, void* last, Cmp cmp)；
 
 ###  
 
+> <font color="red">**评：**</font>
+>
+> <font color="red">先提出实际开发中常遇到两个问题，一个涉及类，一个涉及函数。</font>
+>
+> <font color="red">伴随着如何提高编码效率，如何不写😕重复的代码，尽量做到代码复用，引出模版。</font>
+
 
 
 ### **C++模板的实现** 
 
-C++标准委员会采用一套类似函数式语言的语法来设计C++模板，而且设计成图灵完备 (Turing-complete)（详见参考），我们可以把C++模板看成是一种新的语言，而且可以看成是函数式编程语言，只是设计依附在(借助于）C++其他基础语法上（类和函数）。
+C++标准委员会采用一套类似**函数式语言的语法**来设计C++模板，而且设计成**图灵完备 (Turing-complete)**（详见参考），我们可以把C++模板看成是一种新的语言，而且可以看成是函数式编程语言，只是设计依附在(借助于）C++其他基础语法上（类和函数）。  
+
+
 
 ![img](../resources/format,png-20210412150837397.png)
 
@@ -89,19 +105,20 @@ C++标准委员会采用一套类似函数式语言的语法来设计C++模板�
 a. 定义模板类，让每个模板类拥有模板签名。
 
 ```cpp
-template<typename T>class X{...};
+template<typename T>
+class X{...};
 ```
 
 上面的模板签名可以理解成：X<typename T>; 主要包括模板参数<typename T>和模板名字X（类名）， 基本的语法可以参考《C++ Templates: The Complete Guide》，《C++ primer》等书籍。
 
-模板参数在形式上主要包括四类，为什么会存在这些分类，主要是满足不同类对参数化的需求:
+<font color="yellow">**模板参数在形式上主要包括四类**</font>，为什么会存在这些分类，主要是满足不同类对参数化的需求:
 
 - type template parameter: 类型模板参数，以class或typename 标记；此类主要是解决朴实的参数化类的问题（上面描述的问题），也是模板设计的初衷。
-- non-type template parameter: 非类型模板参数，比如整型，布尔，枚举，指针，引用等;此类主要是提供给大小，长度等整型标量参数的控制，其次还提供参数算术运算能力，这些能力结合模板特化为模板提供了初始化值，条件判断，递归循环等能力，这些能力促使模板拥有图灵完备的计算能力。
-- template template parameter，模板参数是模板,此类参数需要依赖其他模板参数（作为自己的入参），然后生成新的模板参数，可以用于策略类的设计policy-base class。
-- parameter pack，C++11的变长模板参数,此类参数是C++11新增的，主要的目的是支持模板参数个数的动态变化，类似函数的变参，但有自己独有语法用于定义和解析（unpack），模板变参主要用于支持参数个数变化的类和函数，比如std::bind，可以绑定不同函数和对应参数，惰性执行，模板变参结合std::tuple就可以实现。
+- non-type template parameter: 非类型模板参数，比如整型，布尔，枚举，指针，引用等；此类主要是提供给大小，长度等整型标量参数的控制，其次还提供参数算术运算能力，这些能力结合模板特化为模板提供了初始化值，条件判断，递归循环等能力，这些能力促使模板拥有图灵完备的计算能力。
+- template template parameter，模板参数是模板，此类参数需要依赖其他模板参数（作为自己的入参），然后生成新的模板参数，可以用于**策略类的设计policy-base class**。
+- parameter pack，C++11的变长模板参数，此类参数是C++11新增的，主要的目的是支持模板参数个数的动态变化，类似函数的变参，但有自己独有语法用于定义和解析（unpack），模板变参主要用于支持参数个数变化的类和函数，比如std::bind，可以绑定不同函数和对应参数，惰性执行，模板变参结合std::tuple就可以实现。
 
-b. 在用模板类声明变量的地方，把模板实参（Arguments）（类型）带入模板类，然后按照匹配规则进行匹配，选择最佳匹配模板. 模板实参和形参类似于函数的形参和实参，模板实参只能是在编译时期确定的类型或者常量，C++17支持模板类实参推导。
+b. 在用模板类声明变量的地方，把模板实参（Arguments）（类型）带入模板类，然后按照匹配规则进行匹配，选择最佳匹配模板。模板实参和形参类似于函数的形参和实参，模板实参只能是在编译时期确定的类型或者常量，C++17支持模板类实参推导。
 
 c. 选好模板类之后，编译器会进行模板类实例化--即带入实际参数的类型或者常量自动生成代码，然后再进行通常的编译。
 
@@ -111,8 +128,9 @@ c. 选好模板类之后，编译器会进行模板类实例化--即带入实际
 
 模板函数实现技术和模板类形式上差不多：
 
-```typescript
-template<typename T>retType function_name(T t)；
+```cpp
+template<typename T>
+retType function_name(T t)；
 ```
 
 其中几个关键点：
@@ -132,11 +150,11 @@ template<typename T>retType function_name(T t)；
 
 **SFINAE -Substitution failure is not an error** 
 
-要理解这句话的关键点是failure和error在模板实例化中意义，模板实例化时候，编译器会用模板实参或者通过模板实参推导出参数类型带入可能的模板集（模板备选集合）中一个一个匹配，找到最优匹配的模板定义，
+要理解这句话的<font color="yellow">**关键点是failure和error在模板实例化中意义**</font>，模板实例化时候，编译器会用模板实参或者通过模板实参推导出参数类型带入可能的模板集（模板备选集合）中一个一个匹配，找到最优匹配的模板定义，
 
-Failure：在模板集中，单个匹配失败；
+- Failure：在模板集中，单个匹配失败；
 
-Error：在模板集中，所有的匹配失败；
+- Error：在模板集中，所有的匹配失败；
 
 所以单个匹配失败，不能报错误，只有所有的匹配都失败了才报错误。
 
@@ -152,8 +170,8 @@ Error：在模板集中，所有的匹配失败；
 
 模板参数支持两大类计算：
 
-一类是类型计算（通过不同的模板参数返回不同的类型），此类计算为构建类型系统提供了基础，也是泛型编程的基础；
-一类是整型参数的算术运算, 此类计算提供了模板在实例化时候动态匹配模板的能力；实参通过计算后的结果作为新的实参去匹配特定模板（模板特化）。
+- 一类是类型计算（通过不同的模板参数返回不同的类型），此类计算为构建类型系统提供了基础，也是泛型编程的基础；
+- 一类是整型参数的算术运算，此类计算提供了模板在实例化时候动态匹配模板的能力；实参通过计算后的结果作为新的实参去匹配特定模板（模板特化）。
 
 **模板递归**
 
@@ -165,19 +183,21 @@ Error：在模板集中，所有的匹配失败；
 
 **C++ Library:**
 
-可以实现通用的容器（Containers）和算法（Algorithms），比如STL，Boost等,使用模板技术实现的迭代器（Iterators）和仿函数（Functors）可以很好让容器和算法可以自由搭配和更好的配合;
+可以实现通用的容器（Containers）和算法（Algorithms），比如STL，Boost等，使用模板技术实现的迭代器（Iterators）和仿函数（Functors）可以很好让容器和算法可以自由搭配和更好的配合;
 
 **C++ type traits**
 
-通过模板技术，C++ type traits实现了一套操作类型特性的系统，C++是静态类型语言，在编译时候需要对变量和函数进行类型检查，这个时候type traits可以提供更多类型信息给编译器， 能让程序做出更多策略选择和特定类型的深度优化，Type Traits有助于编写通用、可复用的代码。
+通过模板技术，C++ type traits实现了一套操作类型特性的系统，C++是静态类型语言，在编译时候需要对变量和函数进行类型检查，这个时候type traits可以提供更多类型信息给编译器，能让程序做出更多策略选择和特定类型的深度优化，Type Traits有助于编写通用、可复用的代码。
 
 **C++创始人对traits的理解：**
 
-"Think of a trait as a small object whose main purpose is to carry information used by another object or algorithm to determine "policy" or "implementation details". - Bjarne Stroustrup
+> "Think of a trait as a small object whose main purpose is to carry information used by another object or algorithm to determine "policy" or "implementation details". - Bjarne Stroustrup
 
 而这个技术，在其他语言也有类似实现，比如go的interface，java的注解，反射机制等。
 
 **Template metaprogramming-TMP**
+
+
 
 ![img](../resources/format,png-20210412150908816.png)
 
@@ -211,3 +231,54 @@ C++ Policy class design 首见于 Andrei Alexandrescu 出版的 《Modern C++ De
 **模板的未来**
 
 随着模板衍生出来的泛型编程，模板元编程，模板函数式编程等理念的发展，将来也许会发展出更抽象，更通用编程理念。模板本身是图灵完备的，所以可以结合C++其他特性，编译期常量和常量表达式，编译期计算，继承，友元friend等开阔出更多优雅的设计，比如元容器，类型擦除，自省和反射（静态反射和metaclass）等，将来会出现更多优秀的设计。
+
+
+
+
+
+---
+
+**更多细节请参考资料和进一步阅读**：
+
+1《The design and Evolution of C++ 》Bjarne Stroustrup;
+
+2 C++ Templates are Turing Complete，Todd L. Veldhuizen，2003（作者网站已经停了，archive.org 保存的版本，archive.org 可能被限制浏览）;
+
+3 模板细节：
+
+wikipedia.org, cppreference.com（C++，模板template， Template metaprogramming， CRTP （Curiously recurring template pattern）， Substitution failure is not an error (SFINAE)， template_argument_deduction ，Policy-based_class design， Expression templates，等）;
+
+C++ Programming/Templates/Template Meta-Programming
+
+4 模板的基本语法：
+
+- C++标准ISO+IEC+14882-1998，2003，2011;
+
+- 《C++ Templates: The Complete Guide》 by David Vandevoorde, Nicolai M. Josuttis;
+
+5.模板设计进价：
+
+- Andrei Alexandrescu 的 《Modern C++ Design》；
+
+- 候捷的《STL源码剖析》；
+
+- More C++ Idioms：wikipedia.org
+
+6 模板元编程：
+
+- Abrahams, David; Gurtovoy, Aleksey. C++ Template Metaprogramming: Concepts, Tools, and Techniques from Boost and Beyond. Addison-Wesley. ISBN 0-321-22725-5.
+
+- Metaprogramming in C++，Johannes Koskinen，2004
+
+- Boost 的MPL库
+
+7 Blog and papers：
+
+- Coplien, James O. (February 1995). "Curiously Recurring Template Patterns" (PDF). C++ Report: 24–27.
+
+- https://en.wikipedia.org/wiki/Mixin
+
+- http://www.cnblogs.com/liangliangh/p/4219879.html
+
+- http://b.atch.se/posts/non-constant-constant-expressions
+
