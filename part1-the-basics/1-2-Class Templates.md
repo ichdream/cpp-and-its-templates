@@ -208,7 +208,11 @@ But, 事实并非如此：
   >
   > In general, only the syntactic requirements can be checked by the compiler. If the validity or meaning of a program depends whether a sequenced of template arguments models a concept, and the concept is satisfied but not modeled, or if a semantic requirement is not met at the point of use, the program is ill-formed, no diagnostic required.
 
-  
+- <font color="yellow">**concept会有损性能吗**？</font>
+
+  不会
+
+  > That is important because the constraints are evaluated at compile time and therefore produce no overhead in terms of the generated code: This constrained template will produce code that is just as the unconstrained versions we have discussed elsewhere.
 
 ### 2.4 Friends
 
