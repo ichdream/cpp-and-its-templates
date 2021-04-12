@@ -95,11 +95,122 @@ But, 事实并非如此：
 
 
 
+正文中对于`concept`的介绍内容很短，但其实深入理解Concept很关键。📴
 
+> A *concept* is a named set of constraints on one or more template parameters.
+
+问几个问题：
+
+- <font color="yellow">**为什么需要concept**？</font>
+
+  在C++进行模版编程时，我们有时想要对模版参数template parameters进行限制🚫，只有满足要求的template parameters才能继续进行后续的模版初始化过程。
+
+  这样做的好处😋，在于出问题了能够准确地知道bug出现在什么地方，否则的话，template会报告出一大堆信息💻。
+
+  >
+  >
+  >例子：🌰
+  >
+  >1.不用concept， 我们要检查T是否满足要求，函数内部实现：
+  >
+  >```cpp
+  >template<typename T>
+  >T inc(T a)
+  >{
+  >  static_assert(std::is_integral<T>::value)
+  >    return a++;
+  >}
+  >int main(int argc, const char* argv[])
+  >{
+  >  int a = 0;
+  >  std::cout << inc(&a) << std::endl;
+  >  return 0;
+  >}
+  >```
+  >
+  >结果：<font color="y">编译阶段出现问题了，inc函数不能传递指针，T只有是整数类型才可以。从编译出错信息很难定位。</font>
+  >
+  >2.使用concept
+  >
+  >```cpp
+  >template<typename T>
+  >concept Integral = std::is_integral<T>::value;
+  >
+  >template<Integral T>
+  >T inc(T a)
+  >{
+  >  return a++;
+  >}
+  >int main(int argc, const char* argv[])
+  >{
+  >  int a = 0;
+  >  std::cout << inc(&a) << endl;
+  >  return 0;
+  >}
+  >```
+  >
+  >结果：编译阶段报错，很明显可以看出是由于T不满足模版的限制条件。
+  >
+  >**补充：**除了上述的concept写法，还有另外几种写法：
+  >
+  >写法2⃣️：
+  >
+  >```cpp
+  >template<typename T> requires Integral<T>
+  >T inc(T a)
+  >{
+  >  return a++;
+  >}
+  >```
+  >
+  >写法3⃣️：
+  >
+  >```cpp
+  >template<typename>
+  >T inc(T a) requires Integral<T>
+  >{
+  >  return a++;
+  >}
+  >```
+  >
+  >我个人还是比较喜欢😍第3种写法的，比较直观，一眼就可以看清楚👀限制条件是什么。
+  >
+  >写法4⃣️：
+  >
+  >```cpp
+  >Integral auto inc(Integral auto a)
+  >{
+  >  return ++a;
+  >}
+  >```
+  >
+  >备注：这种写法是Bjarne Stroustrup老爷子比较📒推崇的写法。
+
+  
+
+- <font color="yellow">**concept发展到现在怎么样了？**</font>
+
+  C++11将它除去到语言特性中，理由：需要消耗太多的committee resources
+
+  > While C++11 was being a developed, a rich concept system was designed for it, but integrating the feature into the language specification ended up requiring too many committee resources, and that version of concepts was eventually dropped from C++11.
+  >
+  > Some time later, a different design of the feature was proposed, and it appears that it will eventually make it into the language in some form.
+  >
+  > In fact, just before the book went to press, the standardization committee voted to integrate the new design into the draft for C++20.
+
+  C++20已经正式添加进去了。
+
+  > C++20 有了concepts库：
+  >
+  > The concepts library provides definitions of fundamental library concepts that can be used to perform compile-time validation of template arguments and perform function dispatch based on properties of types. These concepts provide a foundation for equational reasoning in programs.
+  >
+  > Most concepts in the standard library impose both syntactic and semantic requirements. It is said that a standard concept is *satisfied* if its syntactic requirements are met, and is *modeled* if it is satisfied and its semantic requirements (if any) are also met.
+  >
+  > In general, only the syntactic requirements can be checked by the compiler. If the validity or meaning of a program depends whether a sequenced of template arguments models a concept, and the concept is satisfied but not modeled, or if a semantic requirement is not met at the point of use, the program is ill-formed, no diagnostic required.
+
+  
 
 ### 2.4 Friends
-
-
 
 
 
