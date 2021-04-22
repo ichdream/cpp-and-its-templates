@@ -10,11 +10,11 @@
 
 ## 第一部分
 
-### 1 C++史前时代
+### 1 [C++史前时代](./Ch1-C++的史前时代.md)
 
 路线图：Simula和分布式系统->C和系统程序设计->数学/历史/哲学/文学的影响
 
-### 2 C with Classes
+### 2 [C with Classes](./Ch2-C-with-Classes.md)
 
 ### 3 C++的诞生
 
